@@ -132,4 +132,27 @@
     });
   });
   $("*[rel=tooltip]").tooltip();
+
+  window.onload = function() {
+    if (annyang) {
+      // Let's define a command.
+      var commands = {
+        'takeoff': function() { //alert('Hello world!');
+        return faye.publish("/drone/move", {
+          action: 'takeoff',
+          speed: $(this).attr("data-action") === "move" ? 0 : void 0
+        }); },
+        'land': function() { //alert('Hello world!');
+        return faye.publish("/drone/move", {
+          action: 'land',
+          speed: $(this).attr("data-action") === "move" ? 0 : void 0
+        }); }
+      };
+    
+      // Add our commands to annyang
+      annyang.addCommands(commands);
+    
+      // Start listening.
+      annyang.start();
+  }
 }).call(this);
