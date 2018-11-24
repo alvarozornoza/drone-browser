@@ -10,16 +10,14 @@
     return showBatteryStatus(data.demo.batteryPercentage);
   });
   window.showBatteryStatus = function(batteryPercentage) {
-    $("#batterybar").width("" + batteryPercentage + "%");
     if (batteryPercentage < 30) {
-      $("#batteryProgress").removeClass("progress-success").addClass("progress-warning");
+      $("#batterybar").removeClass("progress-bar-success").addClass("progress-bar-warning");
     }
     if (batteryPercentage < 15) {
-      $("#batteryProgress").removeClass("progress-warning").addClass("progress-danger");
+      $("#batterybar").removeClass("progress-bar-warning").addClass("progress-bar-danger");
     }
-    return $("#batteryProgress").attr({
-      "data-original-title": "Battery status: " + batteryPercentage + "%"
-    });
+    $("#batterybar").width("" + batteryPercentage + "%");
+    document.getElementById("batterybar").innerHTML = batteryPercentage + "%";
   };
   faye.subscribe("/drone/image", function(src) {
     return $("#cam").attr({
@@ -133,7 +131,9 @@
   });
   $("*[rel=tooltip]").tooltip();
 
+
   window.onload = function() {
+    console.log('Aqui')
     
     function startTime() {
         var today = new Date();
@@ -153,17 +153,47 @@
     }
     if (annyang) {
       // Let's define a command.
-      var commands = {
+       var commands = {
+      //   'takeoff': function(){
+      //     console.log('takeofff')
+      //   },
+      //   'land': function(){
+      //     console.log('land')
+      //   }
         'takeoff': function() { //alert('Hello world!');
+        console.log('Takeoff')
         return faye.publish("/drone/move", {
           action: 'takeoff',
-          speed: $(this).attr("data-action") === "move" ? 0 : void 0
+          speed: 0.3,
+          duration: null
         }); },
         'land': function() { //alert('Hello world!');
+        console.log('Land')
         return faye.publish("/drone/move", {
           action: 'land',
-          speed: $(this).attr("data-action") === "move" ? 0 : void 0
-        }); }
+          speed: 0.3,
+          duration: null
+        }); },
+        'Turn *direction' :  function(direction){
+          console.log('Turn')
+          mov = null;
+          if(direction == 'right'){
+            mov = 'clockwise'
+            console.log('right')
+          }
+          if(direction == 'left')
+          {
+            console.log('left')
+            mov= 'counterClockwise'
+          }
+        return faye.publish("/drone/move", {
+          action: mov,
+          speed: 0.3,
+          duration: 1
+        })
+
+        }
+
       };
     
       // Add our commands to annyang
@@ -171,5 +201,7 @@
     
       // Start listening.
       annyang.start();
+    }
   }
+
 }).call(this);
