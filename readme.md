@@ -1,33 +1,14 @@
-Getting started
-======
-Connect to your ar drone 2 via WLAN, then run node.server.js open up localhost:3001 and you're ready to go.
+# Including voice recognition in a web app GUI to control a drone
 
-Use `W, A, S, D` to move front, back and sideways. Use your `cursors` to go up/down or turn clockwise/counter clockwise.
-Some animations can be triggered with `1-4`
-`SPACE` for taking of and `esc` for landing.
+This project is done  within the frame of the Human Teloperation course from the Master’s Degree in Automatic Control and Robotics of the Polytechnic University of Catalonia. It consist on developing a graphical user interface to control the drone AR Parrot. Furthermore, we include the possibility of controlling the drone by means of drone.
 
-When you crash use `e` to recover from emergency mode.
+This project started from a fork of the repository https://github.com/functino/drone-browser and we include the new features commented before.
 
-This project is heavily inspired from https://github.com/usefulthink/nodecopter-monitor . I just removed the three.js part and ported it from socket.io to faye since I like that better.
+To include the voice control we use the Speech Recognition library Annyang (https://github.com/TalAter/annyang)
 
-Dependencies
-=======
-You can install/update the node dependencies via `npm install -d`.
-Dependencies for client code are managed via bower ( https://github.com/twitter/bower ). 
-You need to have `ffmpeg` installed (it's used for the picture stuff)
+This project was done by:
 
-Screenshot
-========
-This is how it looks like in action:
-![drone browser in chrome](https://raw.github.com/functino/drone-browser/master/screenshot.png)
-
-TODO
-======
-- use getUserMedia/the webcam to control the drone (like magic xylophone...)
-- add a slider to make the speed/duration of actions configurable
-- toggle between takeoff/land buttons or disable takeoff button after takeoff...
-- mayby change the "recover" button to send a land command first (because otherwise the drone tries to start again...)
-- only show the recover button when the drone is in emergency mode
-- use canvas to draw angle-stuff or rotate the picture stream accordingly
-- get rid of the (sometimes) long lag of the picture stream 
-- makte it work without ffmpeg (skip the picture stuff then....)
+Isaac Ambit   
+Enrico Manzini  
+Dunia Prieto  
+Álvaro Zornoza  
